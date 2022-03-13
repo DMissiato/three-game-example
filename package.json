@@ -1,6 +1,7 @@
 {
   "name": "three-game-example",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@react-spring/three": "^9.4.2",
