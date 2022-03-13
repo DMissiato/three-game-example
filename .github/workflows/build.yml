@@ -1,0 +1,36 @@
+# Nome della action
+name: Deploy React App to GH Pages
+
+# evento che triggera la action
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # versione di esecuzione(node.js)
+        node-version: [16]
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # codice custom eseguito
+    - run: npm ci
+    # - run: npm test
+    - run: npm run build
+    
+    # Deploy actions
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
