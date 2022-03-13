@@ -8,7 +8,7 @@ const Cube = ({ position, type, ...props }) =>
     const [ref] = useBox(() => ({
         position,
         type: 'Dynamic',
-        mass: 200,
+        mass: 100,
         ...props
     }))
 

@@ -7,7 +7,7 @@ import { Vector3 } from "three";
 
 const SPEED = 4;
 
-const Player = ({ position, ...props }) => // props position don't work
+const Player = ({ position, ...props }) =>
 {
     const {
         forward,
@@ -23,21 +23,26 @@ const Player = ({ position, ...props }) => // props position don't work
         position,
         args: [1, 1, 1],
         type: 'Dynamic',
-        mass: 1,
+        mass: 70,
         ...props
     }));
 
 
     const currPosition = useRef(position);
+    const velocity = useRef([0, 0, 0]);
+
+    useEffect(() =>
+    {
+        api.position.subscribe((pos) => currPosition.current = pos);
+    }, [api.position]);
 
     useEffect(() => 
     {
-        const subscribe = api.position.subscribe((pos) => currPosition.current = pos);
-        return subscribe;
-    }, [api.position])
+        api.velocity.subscribe((vel) => velocity.current = vel);
+    }, [api.velocity]);
 
-    useFrame(({ clock }) => {
-        //console.log(currPosition.current);
+    useFrame(() => {
+        
         const anchorPos = new Vector3(currPosition.current[0], currPosition.current[1] + 1.5, currPosition.current[2] + 5);
         camera.position.copy(anchorPos);
 
@@ -52,12 +57,10 @@ const Player = ({ position, ...props }) => // props position don't work
         direction
             .subVectors(vectorZ, vectorX)
             .normalize()
-            .multiplyScalar(SPEED / 30)
+            .multiplyScalar(SPEED)
             .applyEuler(camera.rotation);
-
-        //console.log(currPosition.current[1]);
         
-        api.position.set(currPosition.current[0] + direction.x, currPosition.current[1], currPosition.current[2] + direction.z);
+        api.velocity.set(direction.x, velocity.current[1], direction.z);
     });
 
     return (
