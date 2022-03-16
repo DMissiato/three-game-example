@@ -1,9 +1,10 @@
 
 import React, { useEffect, useRef } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
-import { useBox } from "@react-three/cannon";
+import { useSphere } from "@react-three/cannon";
 import useKeyboard from '../../libs/hooks/useKeyboard';
 import { Vector3 } from "three";
+import MouseLook from '../MouseLook';
 
 const SPEED = 4;
 
@@ -19,9 +20,9 @@ const Player = ({ position, ...props }) =>
 
     const { camera } = useThree();
 
-    const [ref, api] = useBox(() => ({
+    const [ref, api] = useSphere(() => ({
         position,
-        args: [1, 1, 1],
+        args: [0.5, 0.5, 0.5],
         type: 'Dynamic',
         mass: 70,
         ...props
@@ -43,7 +44,7 @@ const Player = ({ position, ...props }) =>
 
     useFrame(() => {
         
-        const anchorPos = new Vector3(currPosition.current[0], currPosition.current[1] + 1.5, currPosition.current[2] + 5);
+        const anchorPos = new Vector3(currPosition.current[0], currPosition.current[1] + 0.6, currPosition.current[2]);
         camera.position.copy(anchorPos);
 
         const direction = new Vector3();
@@ -64,9 +65,13 @@ const Player = ({ position, ...props }) =>
     });
 
     return (
-        <mesh scale={[1, 1, 1]} castShadow ref={ref}>
-            <boxBufferGeometry attach='geometry' />
-        </mesh>
+        <>
+            <MouseLook>
+                <mesh scale={[0.5, 0.5, 0.5]} castShadow ref={ref}>
+                    <sphereBufferGeometry attach='geometry' />
+                </mesh>
+            </MouseLook>
+        </>
     );
 };
 
