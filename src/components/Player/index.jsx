@@ -15,6 +15,7 @@ const Player = ({ position, ...props }) =>
         back,
         right,
         left,
+        sprint,
         jump
     } = useKeyboard();
 
@@ -48,7 +49,7 @@ const Player = ({ position, ...props }) =>
         camera.position.copy(anchorPos);
 
         const direction = new Vector3();
-        const vectorZ = new Vector3(0, (jump ? 1 : 0), (
+        const vectorZ = new Vector3(0, 0, (
             (back ? 1 : 0) - (forward ? 1 : 0)
         ));
         const vectorX = new Vector3((
@@ -58,7 +59,7 @@ const Player = ({ position, ...props }) =>
         direction
             .subVectors(vectorZ, vectorX)
             .normalize()
-            .multiplyScalar(SPEED)
+            .multiplyScalar(SPEED * (sprint ? 2.2 : 1))
             .applyEuler(camera.rotation);
         
         api.velocity.set(direction.x, velocity.current[1], direction.z);

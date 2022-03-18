@@ -14,7 +14,7 @@ const Ground = (props) =>
 
     grass.wrapS = RepeatWrapping;
     grass.wrapT = RepeatWrapping;
-    grass.repeat.set(30, 30);
+    grass.repeat.set(50, 50);
 
     return (
         <mesh ref={ref} receiveShadow>
