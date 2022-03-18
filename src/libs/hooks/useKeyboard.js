@@ -13,6 +13,7 @@ const moveKey = (key) =>
         ArrowRight: 'right',
         KeyA: 'left',
         ArrowLeft: 'left',
+        ShiftLeft: 'sprint',
         Space: 'jump'
     };
 
@@ -27,6 +28,7 @@ const useKeyboard = () =>
         back: false,
         right: false,
         left: false,
+        sprint: false,
         jump: false
     });
 

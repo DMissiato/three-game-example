@@ -20,7 +20,10 @@ const App = () =>
         <Ground position={[0, 0.5, 0]} />
         <Player position={[0, 10, 3]} />
         <Cube position={[-1, 1, 0]} type='brick' />
+        <Cube position={[-1, 1, -1]} type='brick' />
         <Cube position={[1, 1, 0]} type='wood' />
+        <Cube position={[1, 2, 0]} type='wood' />
+        <Cube position={[1, 1, 1]} type='wood' />
       </Physics>
     </Canvas>
   );
