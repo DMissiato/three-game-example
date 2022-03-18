@@ -45,9 +45,11 @@ const Player = ({ position, ...props }) =>
 
     useFrame(() => {
         
+        // Follow Camera
         const anchorPos = new Vector3(currPosition.current[0], currPosition.current[1] + 0.6, currPosition.current[2]);
         camera.position.copy(anchorPos);
 
+        // Movement
         const direction = new Vector3();
         const vectorZ = new Vector3(0, 0, (
             (back ? 1 : 0) - (forward ? 1 : 0)
@@ -59,10 +61,16 @@ const Player = ({ position, ...props }) =>
         direction
             .subVectors(vectorZ, vectorX)
             .normalize()
-            .multiplyScalar(SPEED * (sprint ? 2.2 : 1))
+            .multiplyScalar(SPEED * (sprint ? 2.2 : 1))// Sprint
             .applyEuler(camera.rotation);
         
+        // Set Velocity
         api.velocity.set(direction.x, velocity.current[1], direction.z);
+        // Jump
+        if(jump && Math.abs(velocity.current[1].toFixed(2)) < 0.05)
+        {
+            api.velocity.set(velocity.current[0], 7.5, velocity.current[1]);
+        }
     });
 
     return (

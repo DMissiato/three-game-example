@@ -18,12 +18,12 @@ const App = () =>
       <pointLight castShadow intensity={0.7} position={[50, 50, 50]} />
       <Physics gravity={[0, 2.5 * -9.81, 0]} >
         <Ground position={[0, 0.5, 0]} />
-        <Player position={[0, 10, 3]} />
+        <Player position={[0, 3, 7]} />
         <Cube position={[-1, 1, 0]} type='brick' />
         <Cube position={[-1, 1, -1]} type='brick' />
-        <Cube position={[1, 1, 0]} type='wood' />
-        <Cube position={[1, 2, 0]} type='wood' />
-        <Cube position={[1, 1, 1]} type='wood' />
+        <Cube position={[1, 1, 0]} scale={[1, 2, 1]} type='wood' />
+        <Cube position={[1.5, 5, 0.5]} type='wood' />
+        <Cube position={[1, 1, 1.5]} type='wood' />
       </Physics>
     </Canvas>
   );
